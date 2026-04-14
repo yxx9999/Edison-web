@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edison | Mail</title>
+    <meta name="description" content="匿名留言页面，支持主题分类和前端验证。" />
+    <link rel="stylesheet" href="./styles/site.css" />
+  </head>
+  <body class="page-mail">
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="./index.html">Edison</a>
+        <nav class="nav">
+          <a href="./index.html">Start</a>
+          <a href="./about.html">About</a>
+          <a href="./blog.html">Blog</a>
+          <a href="./contact.html">Contact</a>
+          <a href="./mail.html" aria-current="page">Mail</a>
+        </nav>
+      </header>
+
+      <main class="content-main">
+        <section class="page-hero">
+          <p class="eyebrow">Mail</p>
+          <h1>匿名也可以，认真就行。</h1>
+          <p class="hero-copy">这是 MVP 版本的匿名留言页，先完成主题分类、输入校验和前端存储演示，后续再接数据库和邮件通知。</p>
+        </section>
+
+        <section class="mail-layout">
+          <form class="mail-form" id="mail-form">
+            <label>
+              主题分类
+              <select name="topic" required>
+                <option value="">请选择</option>
+                <option value="提问">提问</option>
+                <option value="建议">建议</option>
+                <option value="合作">合作</option>
+                <option value="分享">分享</option>
+                <option value="随便聊聊">随便聊聊</option>
+              </select>
+            </label>
+            <label>
+              你的称呼（可选）
+              <input type="text" name="nickname" maxlength="24" placeholder="匿名也没问题" />
+            </label>
+            <label>
+              留言内容
+              <textarea name="message" rows="7" required minlength="12" maxlength="600" placeholder="你想说什么？"></textarea>
+            </label>
+
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">提交留言</button>
+              <p class="form-note">当前为前端 MVP：提交后写入浏览器本地存储，用于交互验证。</p>
+            </div>
+          </form>
+
+          <aside class="mail-sidecard">
+            <p class="card-label">Submission Flow</p>
+            <h2>后续将接入</h2>
+            <ul class="link-list">
+              <li>Supabase `messages` 表</li>
+              <li>Server Action / Route Handler</li>
+              <li>邮件通知</li>
+              <li>埋点统计</li>
+            </ul>
+            <div class="submission-log" id="submission-log"></div>
+          </aside>
+        </section>
+      </main>
+    </div>
+    <script src="./scripts/site.js"></script>
+  </body>
+</html>
