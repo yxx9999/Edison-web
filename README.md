@@ -1,6 +1,6 @@
-# Edison Website MVP
+# Edison Website
 
-This repository currently contains a dependency-light MVP for Edison personal website.
+This repository contains Edison personal website with static pages plus a lightweight Node backend for phase-two dynamic features.
 
 ## Pages
 
@@ -8,14 +8,15 @@ This repository currently contains a dependency-light MVP for Edison personal we
 - `about.html` - formal profile, experience, and project sections
 - `blog.html` - blog list/detail view powered by local post data
 - `contact.html` - profile links and friends section
-- `mail.html` - anonymous mail MVP with topic selection and local submission storage
+- `mail.html` - anonymous mail page backed by the lightweight `/api/messages` service
 
 ## Run Locally
 
-Use a simple static server from the repository root:
+Install dependencies and run the local service from the repository root:
 
 ```powershell
-python -m http.server 3000
+npm install
+npm run dev
 ```
 
 Then open `http://localhost:3000`.
@@ -23,6 +24,9 @@ Then open `http://localhost:3000`.
 ## Notes
 
 - Blog data lives in `scripts/posts.js`
-- Shared interactions live in `scripts/site.js`
+- Shared interactions and front-end API wiring live in `scripts/site.js`
 - Shared styling lives in `styles/site.css`
-- Mail submission is front-end only in this MVP and stores recent submissions in browser `localStorage`
+- Lightweight backend routes live behind `/api/*`
+- Supabase schema lives in `supabase/schema.sql`
+- Mail submissions, comments, likes, views, and analytics use in-memory fallback until environment secrets are configured
+- Copy `.env.example` to `.env` and fill Supabase / Resend keys when ready
