@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edison | 后台管理</title>
+    <meta name="description" content="Edison 个人网站后台管理面板。" />
+    <link rel="stylesheet" href="./styles/site.css" />
+  </head>
+  <body class="page-admin">
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="./index.html">Edison 后台</a>
+        <nav class="nav">
+          <a href="./index.html">公开网站</a>
+          <a href="./blog.html">博客</a>
+          <a href="./mail.html">来信</a>
+        </nav>
+      </header>
+
+      <main class="content-main admin-main">
+        <section class="page-hero">
+          <p class="eyebrow">PRIVATE ADMIN</p>
+          <h1>内容发布与访客回复后台</h1>
+          <p class="hero-copy">
+            登录后可以查看文章数据、处理来信、回复访客、发布博客，并上传博客图片。
+          </p>
+        </section>
+
+        <section class="admin-panel" id="admin-app">
+          <div class="admin-dashboard" id="admin-dashboard" hidden>
+            <div class="section-heading">
+              <p class="eyebrow">DASHBOARD</p>
+              <h2>网站运营后台</h2>
+            </div>
+            <div class="admin-summary-grid" id="admin-summary-grid"></div>
+            <section class="admin-section">
+              <div class="section-heading">
+                <p class="eyebrow">BLOG METRICS</p>
+                <h3>已发布文章数据</h3>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table" id="admin-post-metrics-table"></table>
+              </div>
+            </section>
+            <section class="admin-section">
+              <div class="section-heading">
+                <p class="eyebrow">MAIL INBOX</p>
+                <h3>最近来信</h3>
+              </div>
+              <div class="admin-message-list" id="admin-message-list"></div>
+              <div class="admin-detail-panel" id="admin-message-detail"></div>
+            </section>
+            <section class="admin-section">
+              <div class="section-heading">
+                <p class="eyebrow">BLOG CMS</p>
+                <h3>Markdown 编辑与发布</h3>
+              </div>
+              <div class="admin-editor-layout">
+                <div>
+                  <div class="admin-table-wrap">
+                    <table class="admin-table" id="admin-post-list-table"></table>
+                  </div>
+                  <button class="button button-secondary" type="button" id="admin-new-post-button">新建草稿</button>
+                </div>
+                <form class="admin-editor-form" id="admin-post-form">
+                  <input type="hidden" name="id" />
+                  <label>
+                    标题
+                    <input type="text" name="title" maxlength="160" required />
+                  </label>
+                  <label>
+                    URL 标识
+                    <input type="text" name="slug" maxlength="120" required />
+                  </label>
+                  <label>
+                    分类
+                    <input type="text" name="category" maxlength="80" required />
+                  </label>
+                  <label>
+                    摘要
+                    <textarea name="excerpt" rows="3" maxlength="360" required></textarea>
+                  </label>
+                  <label>
+                    封面图片 URL
+                    <input type="url" name="coverUrl" />
+                  </label>
+                  <label>
+                    上传封面 / Markdown 图片
+                    <input type="file" name="image" accept="image/png,image/jpeg,image/webp,image/gif" />
+                  </label>
+                  <div class="form-actions">
+                    <button class="button button-secondary" type="button" id="admin-upload-image-button">上传图片（不发布）</button>
+                    <p class="status-inline" id="admin-post-status"></p>
+                  </div>
+                  <label>
+                    Markdown 正文
+                    <textarea name="content" rows="12" required></textarea>
+                  </label>
+                  <label class="checkbox-line">
+                    <input type="checkbox" name="featured" />
+                    重点展示
+                  </label>
+                  <div class="form-actions">
+                    <button class="button button-primary" type="submit">保存草稿</button>
+                    <button class="button button-secondary" type="button" id="admin-publish-post-button">发布</button>
+                    <button class="button button-secondary" type="button" id="admin-archive-post-button">归档</button>
+                  </div>
+                  <p class="form-note">发布成功会同时验证：数据库为 published 状态，且前端公开接口能读取到文章。</p>
+                  <article class="admin-markdown-preview" id="admin-markdown-preview"></article>
+                </form>
+              </div>
+            </section>
+            <div class="form-actions">
+              <button class="button button-secondary" type="button" id="admin-logout-button">退出登录</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="./scripts/admin.js?v=20260415-admin-login-split"></script>
+  </body>
+</html>

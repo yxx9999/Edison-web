@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edison | Mail</title>
-    <meta name="description" content="匿名留言页面，支持主题分类和前端验证。" />
+    <meta
+      name="description"
+      content="匿名留言页面，支持主题分类、基础校验，以及通过轻量后端服务提交到数据库。"
+    />
     <link rel="stylesheet" href="./styles/site.css" />
   </head>
   <body class="page-mail">
@@ -24,11 +27,15 @@
         <section class="page-hero">
           <p class="eyebrow">Mail</p>
           <h1>匿名也可以，认真就行。</h1>
-          <p class="hero-copy">这是 MVP 版本的匿名留言页，先完成主题分类、输入校验和前端存储演示，后续再接数据库和邮件通知。</p>
+          <p class="hero-copy">
+            第二阶段开始，这个页面已经接到轻量后端服务。现在先保留静态页面结构，后续只补 Supabase
+            密钥和邮件密钥，就能切到真实入库与通知。
+          </p>
         </section>
 
         <section class="mail-layout">
           <form class="mail-form" id="mail-form">
+            <input type="text" name="website" class="bot-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
             <label>
               主题分类
               <select name="topic" required>
@@ -45,24 +52,37 @@
               <input type="text" name="nickname" maxlength="24" placeholder="匿名也没问题" />
             </label>
             <label>
+              回复邮箱（可选）
+              <input type="email" name="replyEmail" maxlength="120" placeholder="如果你希望收到回复，可以留下邮箱" />
+            </label>
+            <label>
               留言内容
-              <textarea name="message" rows="7" required minlength="12" maxlength="600" placeholder="你想说什么？"></textarea>
+              <textarea
+                name="message"
+                rows="7"
+                required
+                minlength="12"
+                maxlength="600"
+                placeholder="你想说什么？"
+              ></textarea>
             </label>
 
             <div class="form-actions">
               <button class="button button-primary" type="submit">提交留言</button>
-              <p class="form-note">当前为前端 MVP：提交后写入浏览器本地存储，用于交互验证。</p>
+              <p class="form-note">
+                当前默认走轻量后端服务。没有配置 Supabase / Resend 密钥时，会先使用开发内存模式完成联调。
+              </p>
             </div>
           </form>
 
           <aside class="mail-sidecard">
             <p class="card-label">Submission Flow</p>
-            <h2>后续将接入</h2>
+            <h2>Backend Path</h2>
             <ul class="link-list">
-              <li>Supabase `messages` 表</li>
-              <li>Server Action / Route Handler</li>
-              <li>邮件通知</li>
-              <li>埋点统计</li>
+              <li>POST `/api/messages`</li>
+              <li>Supabase `messages` table after secrets are configured</li>
+              <li>Email notification through Resend when enabled</li>
+              <li>Analytics event for successful submissions</li>
             </ul>
             <div class="submission-log" id="submission-log"></div>
           </aside>
