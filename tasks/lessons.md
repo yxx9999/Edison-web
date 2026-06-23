@@ -29,3 +29,7 @@
 - Rule: When changing browser-side auth flow, bust cached JS and disable local dev caching for HTML/JS responses.
 - Trigger: The admin login API succeeded, but the login page could still behave like the old combined login/dashboard page if the browser reused a stale `scripts/admin.js`.
 - Preventive action: Add a version query to auth-critical scripts and send `Cache-Control: no-store` from the local dev server.
+
+- Rule: When the user asks for the fastest local deployment and preview, start the site and open it first; do not expand into a full test workflow unless requested.
+- Trigger: The user clarified “直接部署，打开一下就好” after a broader smoke-test plan had started.
+- Preventive action: Treat “本地部署，打开一下” as a preview-only task by default, with only a minimal startup check.
