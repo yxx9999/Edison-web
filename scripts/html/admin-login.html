@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edison | 后台登录</title>
+    <meta name="description" content="Edison 个人网站后台登录页。" />
+    <link rel="stylesheet" href="/styles/site.css" />
+  </head>
+  <body class="page-admin">
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">Edison 后台</a>
+        <nav class="nav">
+          <a href="/index.html">公开网站</a>
+          <a href="/blog.html">博客</a>
+          <a href="/mail.html">来信</a>
+        </nav>
+      </header>
+
+      <main class="content-main admin-main">
+        <section class="page-hero">
+          <p class="eyebrow">ADMIN LOGIN</p>
+          <h1>先登录，再进入操作台</h1>
+          <p class="hero-copy">后台操作台包含文章发布、图片上传、来信回复和数据查看，需要有效登录状态。</p>
+        </section>
+
+        <section class="admin-panel" id="admin-login-app">
+          <form class="admin-login-form" id="admin-login-form">
+            <label>
+              后台密码
+              <input type="password" name="password" required autocomplete="current-password" />
+            </label>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">登录后台</button>
+              <p class="status-inline" id="admin-login-status" aria-live="polite"></p>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+    <script src="/scripts/admin.js?v=20260415-admin-login-split"></script>
+  </body>
+</html>

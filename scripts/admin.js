@@ -36,7 +36,7 @@
   }
 
   function makePublicPostUrl(slug) {
-    return "./blog.html?slug=" + encodeURIComponent(slug);
+    return "/blog.html?slug=" + encodeURIComponent(slug);
   }
 
   function escapeHtml(value) {
@@ -157,7 +157,7 @@
   function renderAuthenticated(authenticated) {
     if (isLoginPage) {
       if (authenticated) {
-        window.location.replace("./admin.html");
+        window.location.replace("/admin.html");
       }
       return;
     }
@@ -167,7 +167,7 @@
     }
 
     if (!authenticated) {
-      window.location.replace("./admin-login.html");
+      window.location.replace("/admin-login.html");
       return;
     }
 
@@ -445,7 +445,7 @@
         });
         loginForm.reset();
         setStatus("");
-        window.location.replace("./admin.html");
+        window.location.replace("/admin.html");
       } catch (error) {
         setStatus(error.message);
       }
@@ -458,7 +458,7 @@
         method: "POST",
         body: JSON.stringify({})
       });
-      window.location.replace("./admin-login.html");
+      window.location.replace("/admin-login.html");
     });
   }
 

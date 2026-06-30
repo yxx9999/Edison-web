@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edison | Mail</title>
+    <meta
+      name="description"
+      content="匿名留言页面，支持主题分类、基础校验，以及通过轻量后端服务提交到数据库。"
+    />
+    <link rel="stylesheet" href="/styles/site.css" />
+  </head>
+  <body class="page-mail">
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="/index.html">Edison</a>
+        <nav class="nav">
+          <a href="/index.html">Start</a>
+          <a href="/about.html">About</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/mail.html" aria-current="page">Mail</a>
+        </nav>
+      </header>
+
+      <main class="content-main">
+        <section class="page-hero">
+          <p class="eyebrow">Mail</p>
+          <h1>匿名也可以，认真就行。</h1>
+          <p class="hero-copy">
+            第二阶段开始，这个页面已经接到轻量后端服务。现在先保留静态页面结构，后续只补 Supabase
+            密钥和邮件密钥，就能切到真实入库与通知。
+          </p>
+        </section>
+
+        <section class="mail-layout">
+          <form class="mail-form" id="mail-form">
+            <input type="text" name="website" class="bot-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <label>
+              主题分类
+              <select name="topic" required>
+                <option value="">请选择</option>
+                <option value="提问">提问</option>
+                <option value="建议">建议</option>
+                <option value="合作">合作</option>
+                <option value="分享">分享</option>
+                <option value="随便聊聊">随便聊聊</option>
+              </select>
+            </label>
+            <label>
+              你的称呼（可选）
+              <input type="text" name="nickname" maxlength="24" placeholder="匿名也没问题" />
+            </label>
+            <label>
+              回复邮箱（可选）
+              <input type="email" name="replyEmail" maxlength="120" placeholder="如果你希望收到回复，可以留下邮箱" />
+            </label>
+            <label>
+              留言内容
+              <textarea
+                name="message"
+                rows="7"
+                required
+                minlength="12"
+                maxlength="600"
+                placeholder="你想说什么？"
+              ></textarea>
+            </label>
+
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">提交留言</button>
+              <p class="form-note">
+                当前默认走轻量后端服务。没有配置 Supabase / Resend 密钥时，会先使用开发内存模式完成联调。
+              </p>
+            </div>
+          </form>
+
+          <aside class="mail-sidecard">
+            <p class="card-label">Submission Flow</p>
+            <h2>Backend Path</h2>
+            <ul class="link-list">
+              <li>POST `/api/messages`</li>
+              <li>Supabase `messages` table after secrets are configured</li>
+              <li>Email notification through Resend when enabled</li>
+              <li>Analytics event for successful submissions</li>
+            </ul>
+            <div class="submission-log" id="submission-log"></div>
+          </aside>
+        </section>
+      </main>
+    </div>
+    <script src="/scripts/site.js"></script>
+  </body>
+</html>

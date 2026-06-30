@@ -8,6 +8,23 @@ const { handleApiRequest } = require("../lib/api-router");
 
 const rootDir = path.resolve(__dirname, "..");
 const config = getConfig();
+const htmlDir = path.join(rootDir, "scripts", "html");
+const pageRoutes = new Map(
+  [
+    ["/", "index.html"],
+    ["/index.html", "index.html"],
+    ["/about.html", "about.html"],
+    ["/blog.html", "blog.html"],
+    ["/contact.html", "contact.html"],
+    ["/mail.html", "mail.html"],
+    ["/admin-login.html", "admin-login.html"],
+    ["/admin.html", "admin.html"],
+    ["/Surfing_founder.html", "Surfing_founder.html"],
+    ["/bar.html", "bar.html"],
+    ["/product.html", "product.html"],
+    ["/football.html", "football.html"]
+  ].map(([route, fileName]) => [route.toLowerCase(), fileName])
+);
 
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
@@ -24,8 +41,10 @@ const mimeTypes = {
 
 function resolveFilePath(urlPath) {
   let pathname = decodeURIComponent(urlPath.split("?")[0]);
-  if (pathname === "/") {
-    pathname = "/index.html";
+
+  const pageFileName = pageRoutes.get(pathname.toLowerCase());
+  if (pageFileName) {
+    return path.join(htmlDir, pageFileName);
   }
 
   const normalized = path.normalize(pathname).replace(/^(\.\.[/\\])+/, "").replace(/^[/\\]+/, "");

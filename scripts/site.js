@@ -113,7 +113,7 @@
   }
 
   function getPostCover(post) {
-    return post.cover || "./image/blog/banner.jpg";
+    return post.cover || "/image/blog/banner.jpg";
   }
 
   async function trackEvent(eventName, metadata) {
@@ -143,15 +143,17 @@
         .map(function (comment) {
           return (
             '<article class="comment-card">' +
-            "<div>" +
+            '<div class="comment-heading">' +
             "<strong>" +
             escapeHtml(comment.nickname || "Anonymous") +
             "</strong>" +
-            '<span class="comment-date">' +
+            '<time class="comment-date" datetime="' +
+            escapeHtml(comment.created_at || "") +
+            '">' +
             escapeHtml(new Date(comment.created_at).toLocaleString()) +
-            "</span>" +
+            "</time>" +
             "</div>" +
-            "<p>" +
+            '<p class="comment-content">' +
             escapeHtml(comment.content) +
             "</p>" +
             "</article>"
@@ -174,7 +176,7 @@
 
           return (
             '<article class="post-card">' +
-            '<a class="post-cover" href="./blog.html?slug=' +
+            '<a class="post-cover" href="/blog.html?slug=' +
             encodeURIComponent(post.slug) +
             '" aria-label="' +
             escapeHtml(post.title) +
@@ -189,6 +191,10 @@
             "<h3>" +
             escapeHtml(post.title) +
             "</h3>" +
+            "<p>" +
+            escapeHtml(post.excerpt) +
+            "</p>" +
+            '<div class="post-card-footer">' +
             '<div class="post-meta">' +
             "<span>" +
             escapeHtml(post.date) +
@@ -206,11 +212,7 @@
             formatMetric(commentCount, "comments") +
             "</span>" +
             "</div>" +
-            "<p>" +
-            escapeHtml(post.excerpt) +
-            "</p>" +
-            '<div class="hero-actions">' +
-            '<a class="button button-primary" href="./blog.html?slug=' +
+            '<a class="button button-primary" href="/blog.html?slug=' +
             encodeURIComponent(post.slug) +
             '">Read</a>' +
             "</div>" +
@@ -230,9 +232,9 @@
 
     return (
       '<article class="blog-article">' +
-      "<h2>" +
-      escapeHtml(post.title) +
-      "</h2>" +
+      '<p class="blog-article-subtitle">' +
+      escapeHtml(post.excerpt) +
+      "</p>" +
       '<div class="blog-meta">' +
       "<span>" +
       escapeHtml(post.date) +
@@ -250,20 +252,30 @@
       formatMetric(commentCount, "comments") +
       "</span>" +
       "</div>" +
-      "<p>" +
-      escapeHtml(post.excerpt) +
-      "</p>" +
-      '<div class="detail-actions">' +
-      '<button class="button button-primary like-button" type="button" id="post-like-button">Like This Post</button>' +
-      '<p class="status-inline" id="post-like-status"></p>' +
-      "</div>" +
       '<div class="markdown-body">' +
       renderMarkdown(post.content) +
       "</div>" +
-      '<section class="comment-section">' +
+      '<nav class="article-action-nav" aria-label="Article actions">' +
+      '<button class="button button-secondary like-button" type="button" id="post-like-button">Like This Post</button>' +
+      '<button class="button button-primary" type="button" id="post-share-button">Share With Friend</button>' +
+      '<button class="button button-secondary" type="button" id="post-comment-button">Chat With Others</button>' +
+      "</nav>" +
+      '<p class="status-inline article-action-status" id="post-like-status"></p>' +
+      '<section class="comment-section" id="comments">' +
       '<div class="section-heading">' +
       '<p class="eyebrow">Comments</p>' +
       "<h3>Join the thread</h3>" +
+      "</div>" +
+      '<div id="comment-list">' +
+      renderCommentList(comments) +
+      "</div>" +
+      "</section>" +
+      '<div class="comment-modal" id="comment-modal" hidden>' +
+      '<button class="comment-modal-backdrop" type="button" data-comment-close aria-label="Close comment form"></button>' +
+      '<section class="comment-modal-panel" role="dialog" aria-modal="true" aria-labelledby="comment-modal-title">' +
+      '<div class="comment-modal-header">' +
+      '<div><p class="eyebrow">Write Comment</p><h3 id="comment-modal-title">Chat With Others</h3></div>' +
+      '<button class="comment-modal-close" type="button" data-comment-close aria-label="Close comment form">Close</button>' +
       "</div>" +
       '<form class="comment-form" id="comment-form">' +
       '<input type="text" name="website" class="bot-field" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
@@ -276,10 +288,8 @@
       "</p>" +
       "</div>" +
       "</form>" +
-      '<div id="comment-list">' +
-      renderCommentList(comments) +
-      "</div>" +
       "</section>" +
+      "</div>" +
       "</article>"
     );
   }
@@ -321,6 +331,10 @@
   function attachPostInteractions(post, content, stats, comments) {
     var likeButton = document.getElementById("post-like-button");
     var likeStatus = document.getElementById("post-like-status");
+    var shareButton = document.getElementById("post-share-button");
+    var commentButton = document.getElementById("post-comment-button");
+    var commentModal = document.getElementById("comment-modal");
+    var commentCloseButtons = document.querySelectorAll("[data-comment-close]");
     var commentForm = document.getElementById("comment-form");
     var commentStatus = document.getElementById("comment-form-status");
 
@@ -348,6 +362,54 @@
       });
     }
 
+    if (shareButton) {
+      shareButton.addEventListener("click", async function () {
+        var sharePayload = {
+          title: post.title,
+          text: post.excerpt || post.title,
+          url: window.location.href
+        };
+
+        try {
+          if (navigator.share) {
+            await navigator.share(sharePayload);
+            shareButton.textContent = "Shared";
+          } else {
+            await navigator.clipboard.writeText(window.location.href);
+            shareButton.textContent = "Link Copied";
+          }
+          trackEvent("blog_share", { postSlug: post.slug });
+        } catch (error) {
+          shareButton.textContent = "Share Unavailable";
+        }
+      });
+    }
+
+    if (commentButton && commentModal) {
+      var closeCommentModal = function () {
+        commentModal.hidden = true;
+        document.body.classList.remove("modal-open");
+      };
+
+      var openCommentModal = function () {
+        commentModal.hidden = false;
+        document.body.classList.add("modal-open");
+        var commentInput = commentModal.querySelector("textarea[name='content']");
+        if (commentInput) {
+          commentInput.focus();
+        }
+      };
+
+      commentButton.addEventListener("click", openCommentModal);
+      commentCloseButtons.forEach(function (button) {
+        button.addEventListener("click", closeCommentModal);
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !commentModal.hidden) {
+          closeCommentModal();
+        }
+      });
+    }
     if (commentForm && commentStatus) {
       commentForm.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -393,9 +455,35 @@
     var featured = document.getElementById("featured-posts");
     var content = document.getElementById("blog-content");
     var title = document.getElementById("blog-view-title");
+    var toolbar = title ? title.closest(".blog-toolbar") : null;
+
+    function setBackLink(visible) {
+      if (!toolbar) {
+        return;
+      }
+
+      var backLink = document.getElementById("blog-back-link");
+
+      if (!visible) {
+        if (backLink) {
+          backLink.remove();
+        }
+        return;
+      }
+
+      if (!backLink) {
+        backLink = document.createElement("a");
+        backLink.className = "button button-secondary";
+        backLink.id = "blog-back-link";
+        backLink.href = "/blog.html";
+        backLink.textContent = "Go Back";
+        toolbar.appendChild(backLink);
+      }
+    }
 
     if (!posts.length) {
       title.textContent = "Blogs";
+      title.classList.remove("blog-detail-title");
       content.innerHTML = '<div class="status-card"><p>No posts are available yet.</p></div>';
       return;
     }
@@ -406,12 +494,14 @@
       })
       .slice(0, 5)
       .map(function (post) {
-        return '<li><a href="./blog.html?slug=' + encodeURIComponent(post.slug) + '">' + escapeHtml(post.title) + "</a></li>";
+        return '<li><a href="/blog.html?slug=' + encodeURIComponent(post.slug) + '">' + escapeHtml(post.title) + "</a></li>";
       })
       .join("");
 
     if (!slug) {
       title.textContent = "Blogs";
+      title.classList.remove("blog-detail-title");
+      setBackLink(false);
       content.innerHTML = renderPostList(posts, {});
       var listStatsMap = await fetchStatsMap(posts);
       content.innerHTML = renderPostList(posts, listStatsMap);
@@ -424,11 +514,15 @@
 
     if (!post) {
       title.textContent = "Post Not Found";
+      title.classList.add("blog-detail-title");
+      setBackLink(true);
       content.innerHTML = '<div class="status-card"><p>Post not found. Return to the list and try again.</p></div>';
       return;
     }
 
     title.textContent = post.title;
+    title.classList.add("blog-detail-title");
+    setBackLink(true);
     content.innerHTML = renderPostDetail(post, {}, [], "");
 
     var stats = {};
