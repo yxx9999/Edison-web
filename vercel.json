@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+      { "source": "/", "destination": "/scripts/html/index.html" },
+      { "source": "/index.html", "destination": "/scripts/html/index.html" },
+      { "source": "/about.html", "destination": "/scripts/html/about.html" },
+      { "source": "/blog.html", "destination": "/scripts/html/blog.html" },
+      { "source": "/contact.html", "destination": "/scripts/html/contact.html" },
+      { "source": "/mail.html", "destination": "/scripts/html/mail.html" },
+      { "source": "/admin-login.html", "destination": "/scripts/html/admin-login.html" },
+      { "source": "/admin.html", "destination": "/scripts/html/admin.html" },
+      { "source": "/Surfing_founder.html", "destination": "/scripts/html/Surfing_founder.html" },
+      { "source": "/bar.html", "destination": "/scripts/html/bar.html" },
+      { "source": "/product.html", "destination": "/scripts/html/product.html" },
+      { "source": "/football.html", "destination": "/scripts/html/football.html" }
+    ]
+  }
