@@ -2,6 +2,10 @@
 
 ## Project-relevant rules
 
+- Rule: After the user approves a UI version as the working baseline, do not perform broad redraws, component replacements, or unsolicited visual restructuring.
+- Trigger: The user said this version is good and requested future work to be limited to explicit micro-adjustments; suggestions or better solutions must be written as a todo first and executed only after approval.
+- Preventive action: For UI refinement tasks, change only the specifically requested target. If proposing a broader improvement, write it to `tasks/todo.md` and wait for explicit approval before implementation.
+
 - Rule: Verify the exact task artifact path and file extension before attempting to parse or execute against it.
 - Trigger: The user corrected the task input from `website_goal.md` to `website_goal.docx`.
 - Preventive action: Use file discovery first, then inspect the actual target file before planning work.
@@ -33,3 +37,31 @@
 - Rule: When the user asks for the fastest local deployment and preview, start the site and open it first; do not expand into a full test workflow unless requested.
 - Trigger: The user clarified “直接部署，打开一下就好” after a broader smoke-test plan had started.
 - Preventive action: Treat “本地部署，打开一下” as a preview-only task by default, with only a minimal startup check.
+
+- Rule: In toolbar layouts with a required action button, reserve non-shrinking space for the action first and let long titles wrap within the remaining width.
+- Trigger: The blog detail "返回列表" button compressed or wrapped because the title was allowed to take priority in the same row.
+- Preventive action: For title/action rows, set the action to `flex: 0 0 <fixed width>` with `white-space: nowrap`, and set the title to `min-width: 0` with wrapping behavior.
+
+- Rule: When designing comment interactions, distinguish between the persistent comment list and the comment writing form; only move the form into a popup when requested.
+- Trigger: The user clarified that the article bottom should still show the comment list, while only the writing/comment input area should appear after clicking the write-comment action.
+- Preventive action: Before planning comment UI changes, explicitly separate display behavior for existing comments from input behavior for new comments.
+
+- Rule: Treat the Blogs page and blog detail/sub-article pages as an approved baseline; do not modify them unless the user explicitly names those pages for changes.
+- Trigger: The user stated that the Blogs page and sub-article pages are perfect and asked to move on to other pages.
+- Preventive action: For future tasks, exclude `scripts/html/blog.html`, blog detail rendering in `scripts/site.js`, and blog-specific CSS unless the user explicitly requests Blogs or sub-article page edits.
+
+- Rule: For precise CSS tuning, never replace bare values such as `font-size: 0.88rem` or `top: 18px` across the whole stylesheet.
+- Trigger: A start-page slogan adjustment temporarily changed unrelated navigation, button, status, and section spacing styles that happened to share the same numeric values.
+- Preventive action: Scope replacements to the exact selector block, then grep for the new value and verify every remaining occurrence is intentional before finishing.
+
+- Rule: For simple local deployment requests, do not run long-lived dev servers in the foreground through the tool.
+- Trigger: A local preview task appeared to hang because `npm run dev` was started in the foreground; the command was actually waiting as a server process, while the user only wanted the site deployed and opened quickly.
+- Preventive action: Read the project start command, start the server as a background process, verify the expected URL with a minimal HTTP status check, then open the browser. If PowerShell `Start-Process` fails because of duplicated `PATH/Path` environment keys, use a direct Node/background process approach and keep the flow short.
+
+- Rule: Before wiring an image path into HTML, verify the actual file name and extension that exists on disk.
+- Trigger: The About avatar was first referenced as `image/about/edison.webp`, but the available user-provided image was `image/about/edison.jpeg`.
+- Preventive action: Check the target image directory before editing markup, then use the existing asset path exactly so local preview requests return 200.
+
+- Rule: Do not rewrite Chinese HTML files through PowerShell paths that can change text encoding or corrupt punctuation.
+- Trigger: About page markup broke because a PowerShell write path corrupted UTF-8 Chinese punctuation, turning valid closing tags like `</p>` into malformed text such as `??/p>`.
+- Preventive action: Before and after editing localized HTML, grep for replacement characters and malformed closing tags, and prefer byte-safe restoration or exact scoped patches over broad `Get-Content` / `Set-Content` rewrites.

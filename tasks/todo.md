@@ -1,110 +1,150 @@
-# HTML Move Path Repair Plan
+# New UI Redraw Plan
 
 ## Status
 
-- Role: `agents.planner`
-- State: awaiting user approval before implementation
-- Goal source: `tasks/goal.md`
-- User-owned move to preserve: all root HTML files now live in `scripts/html/`; do not move or restore them to the repository root.
+- Branch: `new_ui`
+- Role: implemented and verified
+- User request: read `UI_design.md`, use `skills/personal-website-ui-polisher/website-ui-polisher-skill.md`, redraw the website UI.
+- Skill used: `personal-website-ui-polisher`
+- Complexity: complex; spans server routing, moved HTML pages, shared CSS, shared JS-generated paths, and visual system changes.
 
-## Findings
+## Source Findings
 
-- `server/dev-server.js` currently resolves `/` to the removed root `index.html` and resolves `/*.html` directly under the repository root, so all existing public page URLs now return `404`.
-- The moved HTML files still use `./styles/...`, `./scripts/...`, and `./image/...`-compatible relative assumptions from their old root location. If served by their physical `/scripts/html/*.html` paths, those references resolve below `/scripts/html/` and break.
-- HTML navigation currently uses relative `./*.html` links. It works only when the browser URL remains at the public root level; root-relative links are safer and make the canonical URL explicit.
-- `scripts/admin.js` and `scripts/site.js` generate relative page and image URLs; `scripts/posts.js` stores relative cover paths. These should be root-relative so behavior does not depend on the HTML files' physical directory.
-- API requests already use `/api/...` or an empty same-origin API base and should remain unchanged.
-- `scripts/smoke-test.js` covers only `/`, `/blog.html`, `/mail.html`, and two API routes; it does not prove all moved pages or required static assets resolve.
-- `README.md` still describes HTML files as repository-root files and needs to distinguish physical file locations from stable public URLs.
-- `package.json` contains no moved-HTML path reference; no package script, dependency, or configuration change is currently required.
+- `UI_design.md` was re-read after the user updated it and now contains the active project UI rules.
+- `docs/design-system.md` does not exist.
+- The applicable design sources are `UI_design.md` and `skills/personal-website-ui-polisher/website-ui-polisher-skill.md`.
+- All HTML files have been moved to `scripts/html/`.
+- `server/dev-server.js` still expects root-level HTML files, so `/`, `/about.html`, `/blog.html`, etc. will return `404` unless route mapping is repaired.
+- Moved HTML still uses root-level relative assumptions such as `./styles/site.css` and `./scripts/site.js`; these must become root-relative URLs such as `/styles/site.css`.
+- Current CSS is dark, glassy, colorful, and dashboard-like. This conflicts with the skill direction: restrained, light `#F5F5F5`, editorial, systematic, Electric Blue used sparingly, Pulse Cyan only for feedback.
 
-## URL Contract
+## Scope
 
-The implementation must preserve these public URLs:
-
-- `/` and `/index.html` -> `scripts/html/index.html`
-- `/about.html` -> `scripts/html/about.html`
-- `/blog.html` -> `scripts/html/blog.html`
-- `/contact.html` -> `scripts/html/contact.html`
-- `/mail.html` -> `scripts/html/mail.html`
-- `/admin-login.html` -> `scripts/html/admin-login.html`
-- `/admin.html` -> `scripts/html/admin.html`
-- `/Surfing_founder.html` -> `scripts/html/Surfing_founder.html`
-- `/bar.html` -> `scripts/html/bar.html`
-- `/product.html` -> `scripts/html/product.html`
-- `/football.html` -> `scripts/html/football.html`
-
-No public URL change is planned. `/scripts/html/*.html` is the physical layout, not the canonical navigation contract.
-
-Static assets and APIs must retain their current root URLs:
-
-- `/styles/...`
-- `/scripts/...`
-- `/image/...`
-- `/api/...`
-
-## Modification Boundary
-
-Allowed implementation files:
+Allowed files:
 
 - `server/dev-server.js`
 - `scripts/html/*.html`
-- `scripts/admin.js`
+- `styles/site.css`
 - `scripts/site.js`
+- `scripts/admin.js`
 - `scripts/posts.js`
 - `scripts/smoke-test.js`
-- `README.md`
+- `README.md` if path documentation needs updating
+- `tasks/todo.md`
 
-Files inspected but not expected to change unless implementation reveals a direct broken reference:
+Out of scope:
 
-- `scripts/seed-post-metrics.js`
-- `scripts/verify-supabase.js`
-- `package.json`
-
-Explicitly out of scope:
-
-- Moving HTML files again or recreating root-level HTML copies
-- Dependency or `package.json` configuration changes
-- API behavior, database schema, environment files, secrets, styling, content, or unrelated refactors
-- Changing external links such as GitHub, LinkedIn, X, Xiaohongshu, and WeChat
-
-## Coder Task Lines
-
-- [ ] Coder 1 — Update `server/dev-server.js` with a narrow page-route mapping from the stable public URLs above to `scripts/html/*.html`, while preserving existing root static asset serving, `/api/*` dispatch, query strings, MIME types, cache behavior, and traversal protection.
-- [ ] Coder 2 — Update all `scripts/html/*.html` local page and asset `href`/`src` references to root-relative public paths (`/about.html`, `/styles/site.css`, `/scripts/site.js`, etc.); preserve fragment-only anchors, external URLs, form behavior, page content, and the existing admin script cache-busting query.
-- [ ] Coder 3 — Update path-producing references in `scripts/admin.js`, `scripts/site.js`, and `scripts/posts.js` to root-relative public page/image URLs; leave `/api/...`, `window.location` analytics values, external URLs, and runtime behavior unchanged.
-- [ ] Coder 4 — Expand `scripts/smoke-test.js` to assert success rather than only print responses, cover every stable page URL plus representative CSS/JS/image assets and existing API checks, and return a nonzero exit code for non-2xx results.
-- [ ] Coder 5 — Update `README.md` so it documents `scripts/html/*.html` as the physical source location while continuing to advertise the stable root-level browser URLs; do not change dependencies or setup instructions beyond path accuracy.
-
-Each coder owns exactly one task line and must not broaden scope. Any need to change the URL contract, dependencies, configuration, or architecture returns the task to Planner for approval.
-
-## Reviewer Checklist
-
-- [ ] Confirm no root HTML file was restored and every user-moved file remains under `scripts/html/`.
-- [ ] Confirm the server mapping is limited to known page routes and does not remap `/api/*`, `/styles/*`, `/scripts/*`, or `/image/*`.
-- [ ] Confirm all local HTML `href`, `src`, `action`, navigation, redirect, generated-link, `fetch`, and image references resolve against the stable public root.
-- [ ] Confirm fragment links and external links were not rewritten.
-- [ ] Confirm API paths remain same-origin `/api/*` paths.
-- [ ] Confirm no dependency, environment, database, styling, content, or unrelated code changes were introduced.
-- [ ] Review the final diff for minimality and maintainability before approval.
-
-## Verification Plan
-
-- [ ] Run a static reference scan across `server/dev-server.js`, `scripts/*.js`, `README.md`, `package.json`, and `scripts/html/*.html` for stale root-file assumptions and unintended `scripts/html/styles`, `scripts/html/scripts`, or `scripts/html/image` resolutions.
-- [ ] Start the existing Node server on a verified free local port without installing dependencies or changing configuration.
-- [ ] Verify HTTP `200` for `/`, `/index.html`, all ten other public `*.html` routes, representative `/styles/site.css`, `/scripts/site.js`, `/scripts/admin.js`, and existing local images.
-- [ ] Verify `/api/health` and the existing post-stats API still return successful responses, proving page routing did not intercept APIs.
-- [ ] Run `npm run smoke` and require a zero exit code with all expanded targets passing.
-- [ ] Check representative HTML response bodies reference root-level public assets/pages and do not expose broken nested resource paths.
-- [ ] If browser tooling is available, open Start, Blog, Mail, Admin Login, and one chapter page; verify navigation, CSS/JS loading, console errors, blog links/images, admin redirects, and form/API calls.
-- [ ] Compare `git diff` and `git status` before completion to prove only approved files changed and the user's existing HTML moves were preserved.
+- Backend API behavior
+- Data models
+- Supabase schema
+- Dependencies
+- Environment files or secrets
+- Large content rewrites
+- Moving HTML files back to root
+- Adding UI libraries
 
 ## Acceptance Criteria
 
-- Existing public URLs `/`, `/index.html`, and every listed `/*.html` route work without redirects to a new required URL.
-- All moved pages load their CSS, JavaScript, and local images from the existing root asset URLs.
-- Navigation, generated blog links, blog cover images, and admin login/dashboard redirects use stable public URLs and do not depend on the physical HTML directory.
-- All `/api/*` requests keep their current contracts and are not captured by static page routing.
-- The expanded smoke test fails on a broken route/asset and passes when all required targets are available.
-- Documentation accurately separates physical HTML locations from browser URLs.
-- No implementation file is changed until the user approves this plan; after implementation, independent Reviewer approval is required before completion.
+- Public URLs stay stable:
+  - `/`
+  - `/index.html`
+  - `/about.html`
+  - `/blog.html`
+  - `/contact.html`
+  - `/mail.html`
+  - `/admin-login.html`
+  - `/admin.html`
+  - `/Surfing_founder.html`
+  - `/bar.html`
+  - `/product.html`
+  - `/football.html`
+- HTML remains physically under `scripts/html/`.
+- All page-local asset links resolve from root-level public URLs:
+  - `/styles/...`
+  - `/scripts/...`
+  - `/image/...`
+  - `/api/...`
+- UI follows the project skill:
+  - background `#F5F5F5`
+  - primary text `#131313`
+  - secondary text `#5F5F5F`
+  - borders `#DADADA`
+  - Electric Blue `#0909E2` used sparingly for brand/headlines/CTA/key accents
+  - Pulse Cyan `#27D7C7` used only for hover, active, focus, and interaction feedback
+  - no large blue backgrounds, heavy-card dashboard feel, generic SaaS layout, or decorative-first animation work
+- Functionality remains intact:
+  - Blog list/detail rendering
+  - Blog generated links and cover images
+  - Mail form submission
+  - Contact copy/share interactions
+  - Admin login/dashboard JS loading
+  - `/api/*` routing
+- Verification passes:
+  - `npm run smoke`
+  - manual HTTP checks for all public pages and representative CSS/JS/image assets
+  - static scan for stale `./styles`, `./scripts`, `./image`, and root HTML assumptions inside moved pages
+
+## Implementation Plan
+
+1. Repair static routing for moved HTML.
+   - Map known public page URLs to `scripts/html/*.html`.
+   - Preserve existing `/api/*`, `/styles/*`, `/scripts/*`, and `/image/*` behavior.
+   - Keep traversal protection and MIME behavior.
+
+2. Normalize moved HTML paths.
+   - Convert local CSS/JS/page links in `scripts/html/*.html` to root-relative public paths.
+   - Preserve external links, fragments, content, forms, and admin script cache-busting query.
+
+3. Normalize JS-generated paths.
+   - Update generated blog links and fallback image paths in `scripts/site.js`, `scripts/admin.js`, and `scripts/posts.js` where needed.
+   - Keep API requests as `/api/*`.
+
+4. Redraw shared UI in `styles/site.css`.
+   - Replace the current dark/glass style with the skill’s light editorial system.
+   - Establish tokens, typography, layout rhythm, border system, buttons, cards, forms, image treatment, hover/focus states, and responsive rules.
+   - Preserve class names to avoid HTML/JS breakage.
+
+5. Tighten page-specific layout only where CSS cannot solve it.
+   - Keep structural edits minimal.
+   - Focus on hierarchy, spacing, typography, and image treatment before animation.
+
+6. Expand smoke coverage if necessary.
+   - Ensure broken routes/assets fail the command rather than only printing responses.
+
+7. Verify.
+   - Completed: static scans.
+   - Completed: local server on free port `3125`.
+   - Completed: `npm run smoke`.
+   - Completed: all public pages and core assets return 200.
+   - Completed: browser visual inspection gap reported.
+
+## Verification Results
+
+- Static scan found no stale moved-page references for `./styles`, `./scripts`, `./image`, nested `../image` CSS URLs, or generated `./blog.html` / admin links.
+- JS syntax checks passed for `server/dev-server.js`, `scripts/site.js`, `scripts/admin.js`, `scripts/posts.js`, and `scripts/smoke-test.js`.
+- `npm run smoke` passed against `http://127.0.0.1:3125` with local memory-mode API.
+- HTTP 200 verified for `/`, `/index.html`, `/about.html`, `/blog.html`, `/contact.html`, `/mail.html`, `/admin-login.html`, `/admin.html`, `/Surfing_founder.html`, `/bar.html`, `/product.html`, `/football.html`, `/styles/site.css`, `/scripts/site.js`, `/scripts/admin.js`, `/scripts/posts.js`, `/image/blog/banner.jpg`, `/image/contact/contact_bnner.jpg`, and `/api/health`.
+- Browser visual inspection was not completed in this tool environment; validation was HTTP/static/JS-based.
+
+## Review Checklist
+
+- No backend/data/config/dependency changes.
+- No root HTML files restored.
+- `scripts/html/` remains the source location.
+- Public URLs work.
+- UI matches `personal-website-ui-polisher` rules.
+- Electric Blue count is controlled per page.
+- Cyan is feedback-only.
+- Long-form text does not use display typography.
+- Images are desaturated/unified by default.
+- Responsive layouts avoid overlap and unreadable controls.
+
+## Comment input popup update
+- Status: approved for implementation.
+- Scope: keep article-bottom comment list visible; move only the comment writing form into a popup opened from Chat With Others.
+- Acceptance: comment list uses name + time + message rows with dividers; submit flow still refreshes comments and count; no backend/API/database changes.
+
+## Start page object-entry redesign
+- Status: approved for implementation.
+- Scope: only `scripts/html/index.html` and start-page CSS in `styles/site.css`.
+- Acceptance: start page shows Edison Xu logo/nav, large IBM slogan, four image-only object links with grayscale default, lit hover/active/focus states, physical tabletop overlap, correct routes; no Blogs/detail/other page edits.

@@ -8,18 +8,18 @@
       name="description"
       content="Edison 的博客页，支持文章列表、详情和基础 Markdown 渲染。"
     />
-    <link rel="stylesheet" href="./styles/site.css" />
+    <link rel="stylesheet" href="/styles/site.css" />
   </head>
   <body class="page-blog">
     <div class="site-shell">
       <header class="topbar">
-        <a class="brand" href="./index.html">Edison</a>
+        <a class="brand" href="/index.html">Edison</a>
         <nav class="nav">
-          <a href="./index.html">Start</a>
-          <a href="./about.html">About</a>
-          <a href="./blog.html" aria-current="page">Blog</a>
-          <a href="./contact.html">Contact</a>
-          <a href="./mail.html">Mail</a>
+          <a href="/index.html">Start</a>
+          <a href="/about.html">About</a>
+          <a href="/blog.html" aria-current="page">Blog</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/mail.html">Mail</a>
         </nav>
       </header>
 
@@ -33,9 +33,14 @@
             <div class="sidebar-block">
               <p class="card-label">Categories</p>
               <ul class="chip-list">
-                <li>产品与增长</li>
-                <li>AI 与 Agent</li>
-                <li>个人成长与复盘</li>
+                <li aria-current="true">Edisons Journey</li>
+                <li>Building Startups!</li>
+                <li>AI &amp; Agent</li>
+                <li>Product &amp; Growth</li>
+                <li>Design &amp; Brand</li>
+                <li>Content &amp; Distribution</li>
+                <li>System</li>
+                <li>Others</li>
               </ul>
             </div>
             <div class="sidebar-block">
@@ -47,14 +52,13 @@
           <div class="blog-panel">
             <div class="blog-toolbar">
               <h2 id="blog-view-title">Blogs</h2>
-              <a class="button button-secondary" href="./blog.html">返回列表</a>
             </div>
             <div id="blog-content"></div>
           </div>
         </section>
       </main>
     </div>
-    <script src="./scripts/posts.js"></script>
-    <script src="./scripts/site.js"></script>
+    <script src="/scripts/posts.js"></script>
+    <script src="/scripts/site.js"></script>
   </body>
 </html>
