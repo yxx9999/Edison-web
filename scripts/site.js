@@ -648,6 +648,34 @@
     });
   }
 
+  function initAboutLanguageToggle() {
+    var story = document.querySelector("[data-about-focus-story]");
+    if (!story) {
+      return;
+    }
+
+    var buttons = story.querySelectorAll("[data-about-lang]");
+    var copies = story.querySelectorAll("[data-about-copy]");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var lang = button.dataset.aboutLang;
+
+        buttons.forEach(function (item) {
+          var active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        copies.forEach(function (copy) {
+          copy.hidden = copy.dataset.aboutCopy !== lang;
+        });
+
+        trackEvent("about_focus_language_toggle", { language: lang });
+      });
+    });
+  }
+
   function initStartTracking() {
     var objectLinks = document.querySelectorAll(".object-link");
     objectLinks.forEach(function (link) {
@@ -663,5 +691,6 @@
   initBlog();
   initMailForm();
   initContactActions();
+  initAboutLanguageToggle();
   initStartTracking();
 })();
