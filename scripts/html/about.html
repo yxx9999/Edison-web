@@ -6,7 +6,7 @@
     <title>Edison | About</title>
     <meta
       name="description"
-      content="Edison 的正式介绍页，聚合个人简介、关注方向、经历与项目。"
+      content="Edison personal about page with profile, projects, experience, and focus notes."
     />
     <link rel="stylesheet" href="./styles/site.css" />
   </head>
@@ -19,7 +19,6 @@
           <a href="./about.html" aria-current="page">About</a>
           <a href="./blog.html">Blog</a>
           <a href="./contact.html">Contact</a>
-          <a href="./mail.html">Mail</a>
         </nav>
       </header>
 
@@ -27,7 +26,7 @@
         <aside class="about-sidebar">
           <section class="about-sidecard about-identity-card">
             <p class="eyebrow">Profile</p>
-            <div class="avatar-upload-card" aria-label="头像上传区域">
+            <div class="avatar-upload-card" aria-label="Avatar area">
               <div class="avatar-upload-preview">
                 <img src="/image/about/edison.jpeg" alt="Edison Xu" />
               </div>
@@ -35,7 +34,7 @@
 
             <div class="about-identity-copy">
               <h1>Edison Xu</h1>
-              <p class="about-role">Founder@SurferGarage | Media</p>
+              <a class="about-role" href="https://www.lang-qian.com/" target="_blank" rel="noopener noreferrer">Founder@SurferGarage | Media</a>
               <p class="about-bio-label">BIO</p>
               <p class="about-role">Building the next exceptional AI-native startup!</p>
               <p class="about-role">Documenting how Gen Z tech founders are building what's next!</p>
@@ -56,128 +55,190 @@
           <section class="about-sidecard about-nav-card">
             <p class="card-label">Navigate</p>
             <nav class="about-anchor-nav" aria-label="About sections">
-              <a href="#intro">Intro</a>
-              <a href="#focus">Focus</a>
-              <a href="#experience">Experience</a>
               <a href="#projects">Projects</a>
+              <a href="#experience">Experience</a>
+              <a href="#focus">Focus</a>
             </nav>
           </section>
         </aside>
 
         <div class="about-main">
-          <section class="about-hero-panel" id="intro">
-            <div class="about-hero-copy">
-              <p class="eyebrow">About Edison</p>
-              <h2>I build products, systems and narrative.</h2>
-              <p class="about-hero-subtitle">让技术、内容与连接形成同一个作品。</p>
-              <p>
-                我关注产品构建、Agent 工作流、内容表达和线下空间运营。我更在意的不只是做出一个东西，
-                而是把它组织成可以持续复用、持续表达、持续连接人的系统。
-              </p>
-              <p>
-                这个页面不再是传统简历式介绍，而是一个更接近工作台的结构：你可以快速看到我在做什么、
-                怎么做、以及我把哪些事情当成长期建设。
-              </p>
+          <section class="about-projects-panel" id="projects">
+            <div class="section-heading about-section-intro">
+              <p class="eyebrow">Projects</p>
+              <h2>Product &amp; Program</h2>
             </div>
-            <div class="about-hero-visual" aria-hidden="true">
-              <div class="about-hero-photo-frame">
-                <div class="about-hero-photo"></div>
-              </div>
-              <div class="about-hero-caption">
-                <span>Current mode</span>
-                <strong>Small teams, tight loops, public-facing output.</strong>
-              </div>
+            <div class="about-project-summary-grid">
+              <a class="about-project-card about-project-image-card" href="https://www.lang-qian.com/" target="_blank" rel="noopener noreferrer" aria-label="Open SurferGarage website">
+                <img src="/image/about/Product%26Program/surfergarage.png" alt="SurferGarage" />
+              </a>
+              <a class="about-project-card about-project-image-card" href="http://mp.weixin.qq.com/s?__biz=Mzk0OTc5NzIxMw==&amp;mid=2247483703&amp;idx=1&amp;sn=78f46ac263fa68ee07d430284016dfe5&amp;chksm=c25333ea8ef7224cf06d39a164a94f865b63a1dbc0c428e3b327370515da9e912a8217733fe5&amp;scene=126&amp;sessionid=1782832720&amp;subscene=227&amp;clicktime=1782832728&amp;enterid=1782832728#rd" target="_blank" rel="noopener noreferrer" aria-label="Open Home399 article">
+                <img src="/image/about/Product%26Program/home399.png" alt="Home399" />
+              </a>
+
             </div>
           </section>
 
-          <section class="about-focus-grid" id="focus">
-            <article class="about-focus-card">
-              <p class="card-label">01</p>
-              <h3>Product Thinking</h3>
-              <p>从目标、约束与验证路径倒推结构，优先做出最小但清晰的版本。</p>
-              <span class="about-chip">MVP first</span>
-            </article>
-            <article class="about-focus-card">
-              <p class="card-label">02</p>
-              <h3>Content Expression</h3>
-              <p>把复杂信息转成可记忆、可分享、可继续对话的内容表达。</p>
-              <span class="about-chip">Narrative systems</span>
-            </article>
-            <article class="about-focus-card">
-              <p class="card-label">03</p>
-              <h3>Agent Workflow</h3>
-              <p>拆分角色、建立验证节点，让复杂任务变得可执行、可审查、可复盘。</p>
-              <span class="about-chip">Planner / Coder / Reviewer</span>
-            </article>
-            <article class="about-focus-card">
-              <p class="card-label">04</p>
-              <h3>Offline Energy</h3>
-              <p>从现场组织、空间节奏与人群互动里提炼线上产品也能用的判断力。</p>
-              <span class="about-chip">Field sense</span>
-            </article>
-          </section>
-
-          <section class="about-stack-panel" id="experience">
-            <div class="section-heading">
-              <p class="eyebrow">Experience</p>
-              <h2>Recent build arc</h2>
+          <section class="about-stack-panel about-experience-panel" id="experience">
+            <div class="section-heading about-section-intro">
+              <h2 class="about-section-title">Experience</h2>
             </div>
             <div class="about-experience-list">
-              <article class="about-experience-card">
-                <span class="about-year">2026</span>
-                <h3>个人站与内容系统</h3>
-                <p>把品牌、写作、作品、入口页与联络方式统一到一个持续更新的个人系统里。</p>
+              <article class="about-experience-card about-experience-row" tabindex="0">
+                <span class="about-year">2023 - 2027</span>
+                <div>
+                  <h3>XJTLU</h3>
+                  <p>BSc Big Data, AI Track. Served as president; participated in tech competitions such as RoboMaster and CCF.</p>
+                </div>
+                <span class="about-chip">Education</span>
+                <div class="about-photo-popover" aria-hidden="true">
+                  <div class="about-photo-grid">
+                    <img src="/image/about/XJTLU/0492233235046c36416bef21f2ec52be.jpg" alt="XJTLU moment" />
+                    <img src="/image/about/XJTLU/15cd47aa1924e6a20505cc84eb5cc7e6.jpg" alt="XJTLU moment" />
+                    <img src="/image/about/XJTLU/8553b0d7cc96740fa8f010be9aa05c54.jpg" alt="XJTLU moment" />
+                    <img src="/image/about/XJTLU/9cdd24ac6761da7f676015c1a2446f18.jpg" alt="XJTLU moment" />
+                    <img src="/image/about/XJTLU/c073fb549ec10e554b8b244939f16bfd.jpg" alt="XJTLU moment" />
+                    <img src="/image/about/XJTLU/ec24bf539b3f0e2627476b240f6285a3.jpg" alt="XJTLU moment" />
+                  </div>
+                </div>
               </article>
-              <article class="about-experience-card">
-                <span class="about-year">2025</span>
-                <h3>产品与 Agent 协作实验</h3>
-                <p>围绕执行链路、角色拆分与验证机制，探索更高密度的小团队工作方式。</p>
+
+              <article class="about-experience-card about-experience-row" tabindex="0">
+                <span class="about-year">2025 - Present</span>
+                <div>
+                  <h3>SurferGarage</h3>
+                  <p>Founder of SG Tech Media, a platform documenting the journeys and insights of Gen Z tech founders.</p>
+                </div>
+                <span class="about-chip">Media</span>
+                <div class="about-photo-popover" aria-hidden="true">
+                  <div class="about-photo-grid">
+                    <img src="/image/about/SurferGarage/07edbefc0f1899d01eff8de0eb71e008.jpg" alt="SurferGarage moment" />
+                    <img src="/image/about/SurferGarage/61906849ddfcde7872e04cec407f9a09.jpg" alt="SurferGarage moment" />
+                    <img src="/image/about/SurferGarage/8b091bea4114cd736a735200a79b486a.jpg" alt="SurferGarage moment" />
+                    <img src="/image/about/SurferGarage/928278d31243396b507db919a86c1b5c.jpg" alt="SurferGarage moment" />
+                    <img src="/image/about/SurferGarage/a189dd41b44cf58e7eaec6cdd8d18b82.jpg" alt="SurferGarage moment" />
+                  </div>
+                </div>
               </article>
-              <article class="about-experience-card">
-                <span class="about-year">2024</span>
-                <h3>内容与线下项目打磨</h3>
-                <p>在叙事、传播、活动和空间组织中形成对节奏、场域与连接方式的敏感度。</p>
+
+              <article class="about-experience-card about-experience-row" tabindex="0">
+                <span class="about-year">2024 - 2026</span>
+                <div>
+                  <h3>VLM Research</h3>
+                  <p>My research interests range from diffusion models in medical imaging to improving image generation with autoregressive models.</p>
+                </div>
+                <span class="about-chip">Research</span>
+                <div class="about-photo-popover" aria-hidden="true">
+                  <div class="about-photo-grid about-photo-grid-placeholder">
+                    <div class="about-photo-placeholder">Research</div>
+                  </div>
+                </div>
               </article>
+
+              <article class="about-experience-card about-experience-row" tabindex="0">
+                <span class="about-year">2024 - 2026</span>
+                <div>
+                  <h3>Home399 Bar</h3>
+                  <p>Owned the cocktail bar at 19, btw Tequila Sunrise is the best!</p>
+                </div>
+                <span class="about-chip">Business</span>
+                <div class="about-photo-popover" aria-hidden="true">
+                  <div class="about-photo-grid">
+                    <img src="/image/about/Home399%20bar/23f42431bac88153d06a3cd113891f77.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/408dbbfdc69aaaff76e68d2d1812e89f.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/61f1d3837613dc3dc4e36f5d228d35de.png" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/6db03c03b73a49f2d1a6402aebb277d3.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/6f73e5dbb5c07368fcaf0ac0a4d57cf7.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/869c32c566c87ef72ade561a7dddd64d.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/a007e6aaab5e356be6b8399a7c2a1f3c.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/c1c0e19dd6a5ad57a214e92d9dc816ee.jpg" alt="Home399 Bar moment" />
+                    <img src="/image/about/Home399%20bar/ff6cb5d027ffac60fa4dfcbd99a726a4.jpg" alt="Home399 Bar moment" />
+                  </div>
+                </div>
+              </article>
+
+              <article class="about-experience-card about-experience-row" tabindex="0">
+                <span class="about-year">2023 - 2024</span>
+                <div>
+                  <h3>Miami Victory Club</h3>
+                  <p>Built a football club with best friends, and as team captain won lots of championships and medals.</p>
+                </div>
+                <span class="about-chip">Hobby</span>
+                <div class="about-photo-popover" aria-hidden="true">
+                  <div class="about-photo-grid">
+                    <img src="/image/about/Miami%20Victory%20Club/2ce61ffe236b4221bc9cd58bb76b9cd8.jpg" alt="Miami Victory Club moment" />
+                    <img src="/image/about/Miami%20Victory%20Club/53066e958ea159f3c5cac7e26b2b24ae.jpg" alt="Miami Victory Club moment" />
+                    <img src="/image/about/Miami%20Victory%20Club/632ceaed2e5d1d7475e0f49708e3729c.jpg" alt="Miami Victory Club moment" />
+                    <img src="/image/about/Miami%20Victory%20Club/c3e4c823cc69facb8492ec4157e9f48b.jpg" alt="Miami Victory Club moment" />
+                    <img src="/image/about/Miami%20Victory%20Club/cbc72b6b6c5599ac63034a6454996e4e.jpg" alt="Miami Victory Club moment" />
+                  </div>
+                </div>
+              </article>
+
             </div>
           </section>
 
-          <section class="about-projects-grid" id="projects">
-            <article class="about-large-card">
-              <div class="section-heading">
-                <p class="eyebrow">Projects</p>
-                <h2>What I am building</h2>
+          <section class="about-focus-panel" id="focus">
+            <article class="about-large-card about-focus-story-card" data-about-focus-story>
+              <div class="about-focus-story-heading">
+                <div class="section-heading">
+                  <p class="eyebrow">Focus</p>
+                  <h2>Hi, I'm Edison Xu.</h2>
+                </div>
+                <div class="about-language-toggle" aria-label="Switch introduction language">
+                  <button class="is-active" type="button" data-about-lang="en" aria-pressed="true">EN</button>
+                  <button type="button" data-about-lang="cn" aria-pressed="false">CN</button>
+                </div>
               </div>
-              <div class="about-work-list">
-                <article class="about-work-item">
-                  <h3>Personal Website MVP</h3>
-                  <p>把个人品牌、叙事、项目和联系入口压缩成一个统一且可扩展的体验。</p>
-                </article>
-                <article class="about-work-item">
-                  <h3>Agent Workflow Notes</h3>
-                  <p>沉淀 Planner / Coder / Reviewer 的协作模式，强化执行与验证闭环。</p>
-                </article>
-              </div>
-            </article>
 
-            <article class="about-large-card">
-              <div class="section-heading">
-                <p class="eyebrow">Notes</p>
-                <h2>What I keep observing</h2>
+              <div class="about-focus-story" data-about-copy="en">
+                <p>Most of you probably know me through SurferGarage. This site is a more complete entry point. You can get to know me better here, and read more of my unfiltered thoughts.</p>
+                <p>At SurferGarage, you may see 30% of me. On social media, maybe 50%. Here, I will share 100% of my blogs, projects, thoughts, and experiments.</p>
+                <p>I will keep updating this site, improving its features, and trying out fun, useful, and meaningful things. Feel free to come back anytime.</p>
+                <p>Who am I? I have built things across many fields.</p>
+                <p>More precisely, I am a system builder and modeler. I studied Big Data and have worked across engineering, product, content, community, and startups. I like using systems thinking, data analysis, and modeling to understand the world.</p>
+                <p>Then I apply those ideas to startups, products, agents, content, and sometimes even cocktails.</p>
+                <p>To me, the most important thing is simple: create real value in the real world, and earn real feedback from users.</p>
+                <p>That is why I chose entrepreneurship.</p>
+                <p>Entrepreneurship is how adventurers embrace the world today.</p>
+                <p>At 19, I achieved two dreams in a row. I led my own football team to a championship. I also opened my own store.</p>
+                <p>After that, I chose something harder: to spend the next ten years building a great and enduring company. The next Google or ByteDance. I really admire their cultures. They build systems. They evolve across cycles.</p>
+                <p>And I am still growing.</p>
+                <p>Right now, I am building SurferGarage.</p>
+                <p>We interview early-stage tech founders aged 16 to 28. We help more people see paths beyond the traditional one. Our goal is to become the first place to understand Gen Z tech founders, and help them be seen by the world earlier.</p>
+                <p>The source of my creation is simple:</p>
+                <p>I want to bring the right people together, and make beautiful things happen.</p>
+                <p>That is why I started with communities, then moved into media. Now, in the age of AI, more exciting explorations are on the way.</p>
+                <p>I like humans.</p>
+                <p>Through media, bars, and communities, I have met people from many layers of the real world. Everyday users. Founders. Investors. Creators. Builders.</p>
+                <p>That is why my view of the world is human-centered.</p>
+                <p>Technology, engineering, and systems should not make the world colder. They should help people connect better, create better, and live better.</p>
+                <p>So I will say my mission again: Bring the right people together, and make beautiful things happen.</p>
+                <p>All right, here is the quick version:</p>
+                <p>I am Edison Xu, a founder creating value in the real world. I build startups, products, media, and AI-native organizations with systems, engineering, and modeling.</p>
+                <p>My dream is to build a truly great and enduring company in the next ten years. I also want to keep using technology to bring the right people together, and make beautiful things happen.</p>
+                <p>Always looking for partners and crew members who want to sail together for the next decade.</p>
               </div>
-              <div class="about-work-list">
-                <article class="about-work-item">
-                  <h3>Field Notes</h3>
-                  <p>从足球、现场组织与真实互动里吸收节奏感、复盘习惯和团队视角。</p>
-                </article>
-                <article class="about-work-item">
-                  <h3>Another Builder Radar</h3>
-                  <p>长期关注那些同时在做产品、内容和连接方式的人，观察他们如何组织作品。</p>
-                </article>
+
+              <div class="about-focus-story" data-about-copy="cn" hidden>
+                <p>Hi！这里是 Edison Xu。</p>
+                <p>大部分朋友可能是通过 SurferGarage 认识我的。这里会是一个更完整的入口，你可以更全面地了解我，也可以看到更多未经压缩的思考。在浪前，我可能只展示 30%；在社交媒体，我可能展示 50%；而在这里，我会持续更新 100% 属于我的 blogs、项目、思考和实验。我也会不断优化这里的内容与功能，探索一些好玩、有趣、有价值的事情。欢迎朋友们常来看看。</p>
+                <p>Who am I？如你所见，我 build 过很多不同领域的事物。更准确地说，我是一位系统构建者与建模者。得益于大数据专业背景，以及过去在工程、产品、内容、社区和创业中的实践，我擅长用系统工程、数据分析与建模的方式理解世界，并把这些思维应用到 startup、产品、Agent、content，甚至是发明一款鸡尾酒。</p>
+                <p>依我所见，重中之处是在真实世界创造价值，并从用户那里获得回报，所以我选择了创业。创业，是这个时代冒险者拥抱世界的方式。</p>
+                <p>在我 19 岁的时候，我接连实现了自己的两个梦想：带领自己的球队赢得冠军与拥有一家自己的店。之后我选择了更难的事：十年创造一家基业长青的伟大公司，下一家谷歌 &amp; 字节（我真的很喜欢它们的文化！他们擅长构建系统并穿越了周期）。我正在不断增长。</p>
+                <p>现在，我正在同时构建 SurferGarage。</p>
+                <p>访谈 16-28 岁早期科技创业者，让更多人看到传统路径之外的可能性。我们希望成为了解 Gen Z tech founders 的第一入口，让他们更早被世界看见。</p>
+                <p>我创造的源泉，是我希望让更多对的人相遇，让美好的事情发生。所以你看到早期我做社区，现在做媒体，而在 AI 时代，我们有更多令人振奋的探索，正在路上。</p>
+                <p>我喜欢人类，得益于媒体、酒吧、社区，我几乎 from bottom to the top 地接触了各种人，所以我看待世界的方式是人本位的。我希望通过技术与工程，让人类更好。我想再次复述我的使命：让更多对的人相遇，让美好的事情发生。</p>
+                <p>All right，你可以这样快速认识 Edison Xu：正在真实世界创造价值，用系统、工程与建模思维搭建 startup、产品、媒体的 founder。</p>
+                <p>梦想是十年创办一家基业长青的伟大公司，不断用科技让更多对的人相遇，让美好的事情发生。</p>
+                <p>不断寻找同行十年的伙伴与船员。</p>
               </div>
             </article>
           </section>
         </div>
       </main>
     </div>
+    <script src="./scripts/site.js?v=about-focus-lang-2"></script>
   </body>
 </html>

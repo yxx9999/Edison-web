@@ -65,3 +65,15 @@
 - Rule: Do not rewrite Chinese HTML files through PowerShell paths that can change text encoding or corrupt punctuation.
 - Trigger: About page markup broke because a PowerShell write path corrupted UTF-8 Chinese punctuation, turning valid closing tags like `</p>` into malformed text such as `??/p>`.
 - Preventive action: Before and after editing localized HTML, grep for replacement characters and malformed closing tags, and prefer byte-safe restoration or exact scoped patches over broad `Get-Content` / `Set-Content` rewrites.
+
+- Rule: After any scripted HTML rewrite, immediately verify the target file size is nonzero before continuing with further edits.
+- Trigger: An About page image-adaptation script accidentally wrote `scripts/html/about.html` to 0 bytes before the page was rebuilt and verified.
+- Preventive action: For future file rewrites, check `(Get-Item <file>).Length`, grep for required structural anchors, and verify the local route returns 200 before making additional changes.
+
+- Rule: When the user corrects a requested layout count, immediately collapse the implementation to that exact count instead of preserving prior structure.
+- Trigger: The About Focus section was initially discussed while the old implementation had two cards, and the user clarified that Focus should become one card only.
+- Preventive action: For section replacement tasks, restate the final component count before editing and verify the DOM contains only that count after the change.
+
+- Rule: After adding browser-side UI initialization code, verify that the initializer is actually invoked by the page boot sequence.
+- Trigger: The About Focus CN/EN toggle function was defined in `scripts/site.js` but not called, so the CN button had no click behavior.
+- Preventive action: For every new UI handler, grep for both the function definition and its initialization call, then verify the DOM state changes after a simulated or browser click.

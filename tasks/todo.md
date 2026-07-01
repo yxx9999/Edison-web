@@ -148,3 +148,34 @@ Out of scope:
 - Status: approved for implementation.
 - Scope: only `scripts/html/index.html` and start-page CSS in `styles/site.css`.
 - Acceptance: start page shows Edison Xu logo/nav, large IBM slogan, four image-only object links with grayscale default, lit hover/active/focus states, physical tabletop overlap, correct routes; no Blogs/detail/other page edits.
+
+## About page right-column iteration
+- Status: approved for implementation on branch `about2.1`.
+- Scope: only `scripts/html/about.html` and About-specific CSS in `styles/site.css`; do not modify other pages.
+- Constraint: keep the left sidebar presentation largely unchanged; only adjust anchor links if needed for the new right-column sections.
+- Plan:
+  1. Replace the right column with three sections in this order: Experience, Projects, Focus.
+  2. Build Experience from six entries: XJTLU, SurferGarage, Research, Home399 Bar, Miami Victory Club, Activity Team.
+  3. Add hover/focus photo popovers for Experience entries, using existing images when present and placeholders where folders are empty.
+  4. Convert the current four Focus cards into two Projects cards.
+  5. Move the current Projects-style long-form logic into the final Focus section.
+- Assets:
+  - Use images from `/image/about/SurferGarage/`, `/image/about/Home399%20bar/`, and `/image/about/Miami%20Victory%20Club/`.
+  - Use placeholders for XJTLU, Research, and Activity Team; existing folder is spelled `Acitivity Team`.
+- Verification:
+  - Confirm only About files changed, excluding existing untracked local-server pid.
+  - Run static checks for malformed tags in `scripts/html/about.html`.
+  - Verify `/about.html` renders and referenced About images return HTTP 200 where applicable.
+
+## Start page demo popovers
+- Status: approved for implementation on branch `about2.1`.
+- Scope: only `scripts/html/index.html` and Start-specific CSS in `styles/site.css`.
+- Goal: for demo presentation, disable the four Start object links and show photo popovers instead.
+- Behavior:
+  - Computer object: no link and no photo association for now.
+  - Mic object: show SurferGarage photo grid.
+  - Cocktail object: show Home399 Bar photo grid.
+  - Football object: show Miami Victory Club photo grid.
+  - Preserve object visuals; reveal popovers on hover/focus/click via button focus.
+- Out of scope: child page files, routing, backend, and permanent deletion of existing pages.
+- Verification: `/index.html`, referenced Start images, and representative popover images return 200; `git diff --check` passes.
